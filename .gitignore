@@ -1,4 +1,4 @@
-.chunks.pkl
+./chunks.pkl/
 .venv
-.__pycache__
-.index.faiss
+./__pycache__
+./index.faiss
