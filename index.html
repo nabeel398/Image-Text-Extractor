@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OCR Image Text Extractor</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f7f9fc;
+    }
+    .output-box {
+      background: #212529;
+      color: #f8f9fa;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container mt-5">
+  <h2 class="text-center mb-4">📄 OCR Image Text Extractor</h2>
+
+  <div class="card p-4 shadow-sm">
+    <form id="uploadForm">
+      <div class="mb-3">
+        <label for="imageFile" class="form-label">Select Image File</label>
+        <input class="form-control" type="file" id="imageFile" name="file" accept="image/*" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Upload & Extract Text</button>
+    </form>
+  </div>
+
+  <div class="mt-4" id="loading" style="display: none;">
+    <div class="text-center">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="mt-2">Processing image, please wait...</p>
+    </div>
+  </div>
+
+  <div class="mt-4" id="output" style="display: none;">
+    <h4>📝 Extracted Output:</h4>
+    <div class="output-box" id="outputText"></div>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById("uploadForm");
+  const loading = document.getElementById("loading");
+  const output = document.getElementById("output");
+  const outputText = document.getElementById("outputText");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const fileInput = document.getElementById("imageFile");
+    if (!fileInput.files.length) return;
+
+    const formData = new FormData();
+    formData.append("file", fileInput.files[0]);
+
+    loading.style.display = "block";
+    output.style.display = "none";
+
+    try {
+      const response = await fetch("http://localhost:8000/upload-image/", {
+        method: "POST",
+        body: formData,
+      });
+
+      const text = await response.text();
+
+      outputText.textContent = text;
+      output.style.display = "block";
+    } catch (err) {
+      outputText.textContent = "❌ Error uploading image.";
+      output.style.display = "block";
+    } finally {
+      loading.style.display = "none";
+    }
+  });
+</script>
+
+</body>
+</html>

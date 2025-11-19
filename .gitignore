@@ -1,0 +1,4 @@
+.chunks.pkl
+.venv
+.__pycache__
+.index.faiss

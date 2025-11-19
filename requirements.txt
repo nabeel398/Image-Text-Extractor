@@ -1,0 +1,28 @@
+# OCR and Image Processing
+pytesseract
+opencv-python
+Pillow
+
+# Text Processing and Embeddings
+langchain
+sentence-transformers
+faiss-cpu
+
+# Local LLM Inference (You can switch to API-based if needed)
+transformers
+torch
+
+# API Backend
+fastapi
+uvicorn[standard]
+
+# Utility
+numpy
+scipy
+
+# For CORS (if you connect frontend)
+fastapi[all]
+
+
+# Optional Advanced OCR
+paddleocr
